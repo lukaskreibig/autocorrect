@@ -1,5 +1,3 @@
-SOLVED :]
-
 # React: Autocorrection App
 
 ## Environment 
