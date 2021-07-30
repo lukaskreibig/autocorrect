@@ -1,19 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 function AutocorrectTextarea({ corrections }) {
   const [autoCorrection, setAutoCorrection] = useState("");
-  const [lastWord, setLastWord] = useState("");
+  const [lastWord, setLastWord] = useState([]);
 
-  const correctionHandler = () => {
-    if (autoCorrection.length > 0) {
-      setLastWord(autoCorrection);
+  const correctionHandler = (e) => {
+    let input = e;
+    setAutoCorrection(input);
+    if (input.indexOf(" ") != -1) {
+      setLastWord(input.split(" "));
       for (let key in corrections) {
-        console.log(key);
-        console.log(corrections[key]);
-        if (key === lastWord) {
-          setAutoCorrection(corrections[key]);
-          console.log(lastWord);
+        if (key === lastWord[lastWord.length - 2]) {
+          setAutoCorrection(input.replace(key, corrections[key]));
         }
       }
     }
@@ -25,10 +24,7 @@ function AutocorrectTextarea({ corrections }) {
         <textarea
           data-testid="textarea"
           value={autoCorrection}
-          onChange={(e) => {
-            setAutoCorrection(e.target.value);
-            correctionHandler();
-          }}
+          onChange={(e) => correctionHandler(e.target.value)}
           rows={10}
           cols={80}
           className="card"
