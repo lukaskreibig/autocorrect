@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 
 function AutocorrectTextarea({ corrections }) {
@@ -8,7 +8,7 @@ function AutocorrectTextarea({ corrections }) {
   const correctionHandler = (e) => {
     let input = e;
     setAutoCorrection(input);
-    if (input.indexOf(" ") != -1) {
+    if (input.indexOf(" ") !== -1) {
       setLastWord(input.split(" "));
       for (let key in corrections) {
         if (key === lastWord[lastWord.length - 2]) {
